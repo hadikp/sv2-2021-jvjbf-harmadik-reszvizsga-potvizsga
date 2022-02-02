@@ -41,6 +41,7 @@ public class ContentService {
         if (!(String.valueOf(user.getPassword())).equals(passwordCreate)) {
             throw new IllegalArgumentException("Password is Invalid!");
         }
+        user.setLogIn(true);
 
     }
 
