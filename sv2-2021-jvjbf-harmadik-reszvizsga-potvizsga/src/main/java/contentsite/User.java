@@ -9,7 +9,7 @@ public class User {
 
     public User(String userName, String password) {
         this.userName = userName;
-        this.password = String.valueOf((password.concat(userName)).hashCode());
+        this.password = String.valueOf((userName + password).hashCode());
     }
 
     public void upgradeForPremium() {
@@ -28,8 +28,8 @@ public class User {
         return userName;
     }
 
-    public String getPassword() {
-        return password;
+    public int getPassword() {
+        return Integer.valueOf(password);
     }
 
     public boolean isPremiumMember() {
