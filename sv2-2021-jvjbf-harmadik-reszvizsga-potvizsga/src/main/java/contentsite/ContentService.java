@@ -10,7 +10,7 @@ public class ContentService {
 
     public void registerUser(String name, String password) {
         if (isUsername(name)) {
-            throw new IllegalArgumentException("Username is already taken:" + name);
+            throw new IllegalArgumentException("Username is already taken: " + name);
         }
         allUsers.add(new User(name, password));
 
@@ -23,13 +23,34 @@ public class ContentService {
     void addContent(Content content){
         if(!allContent.contains(content.getTitle())){
             allContent.add(content);
+        } else {
+            throw new IllegalArgumentException("Content is already taken: " + content.getTitle());
         }
     }
 
     public void logIn(String username, String password) {
         User user = allUsers.stream().filter(l -> l.getUserName().equals(username)).findFirst().get();
         String passwordCreate = String.valueOf((username + password).hashCode());
-        if (user.isLogIn())
+        if (!user.getUserName().equals(username)) {
+            throw new IllegalArgumentException("Username is wrong!");
+        }
+        if (!(String.valueOf(user.getPassword())).equals(passwordCreate)) {
+            throw new IllegalArgumentException("Password is Invalid!");
+        }
+
+    }
+
+    public void clickOnContent(User user, Content content){
+        if(!content.isPremiumContent()){
+            content.click(user);
+        }
+        if(content.isPremiumContent()){
+            if(user.isLogIn()){
+                content.click(user);
+            } else {
+                throw new IllegalArgumentException("Log in to watch this content!");
+            }
+        }
     }
 
     public Set<User> getAllUsers() {
