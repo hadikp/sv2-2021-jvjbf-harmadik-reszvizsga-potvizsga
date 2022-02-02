@@ -21,11 +21,15 @@ public class ContentService {
     }
 
     void addContent(Content content){
-        if(!allContent.contains(content.getTitle())){
+        if(!isContent(content)){
             allContent.add(content);
         } else {
-            throw new IllegalArgumentException("Content is already taken: " + content.getTitle());
+            throw new IllegalArgumentException("Content name is already taken: " + content.getTitle());
         }
+    }
+
+    private boolean isContent(Content c) {
+        return allContent.stream().map(Content::getTitle).anyMatch(p -> p.equals(c.getTitle()));
     }
 
     public void logIn(String username, String password) {
