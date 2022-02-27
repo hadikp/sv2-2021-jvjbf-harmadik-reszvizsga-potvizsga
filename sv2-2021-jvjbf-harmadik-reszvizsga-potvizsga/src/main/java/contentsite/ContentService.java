@@ -35,22 +35,28 @@ public class ContentService {
     public void logIn(String username, String password) {
         User user = allUsers.stream().filter(l -> l.getUserName().equals(username)).findFirst().get();
         String passwordCreate = String.valueOf((username + password).hashCode());
-        if (!user.getUserName().equals(username)) {
+        if (user.getUserName().equals(username)) {
+            if ((String.valueOf(user.getPassword())).equals(passwordCreate)) {
+                user.setLogIn(true);
+            } else {
+                throw new IllegalArgumentException("Password is Invalid!");
+            }
+        }else {
             throw new IllegalArgumentException("Username is wrong!");
         }
-        if (!(String.valueOf(user.getPassword())).equals(passwordCreate)) {
-            throw new IllegalArgumentException("Password is Invalid!");
-        }
-        user.setLogIn(true);
+
+
+
+
 
     }
 
     public void clickOnContent(User user, Content content){
-        if(!content.isPremiumContent()){
-            content.click(user);
-        }
-        if(content.isPremiumContent()){
-            if(user.isLogIn()){
+            if(!content.isPremiumContent()){
+                content.click(user);
+            }
+            if(content.isPremiumContent()){
+             if(user.isLogIn()){
                 content.click(user);
             } else {
                 throw new IllegalArgumentException("Log in to watch this content!");

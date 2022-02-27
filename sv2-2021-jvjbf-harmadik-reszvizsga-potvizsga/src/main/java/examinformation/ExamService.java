@@ -46,33 +46,34 @@ public class ExamService {
         }
     }
 
-    public List<String> findPeopleFailed(){
+    public List<String> findPeopleFailed() {
         List<String> result = new ArrayList<>();
-        for(Map.Entry<String, ExamResult> entries: results.entrySet()){
-            if((entries.getValue().getTheory() / theoryMax) * 100<51 || (entries.getValue().getPractice()/practiceMax) * 100<51){
+        for (Map.Entry<String, ExamResult> entries : results.entrySet()) {
+            if ((entries.getValue().getTheory() / theoryMax) * 100 < 51 || (entries.getValue().getPractice() / practiceMax) * 100 < 51) {
                 result.add(entries.getKey());
-            };
+            }
+            ;
         }
         return result;
     }
 
-    public String findBestPerson(){
+    public String findBestPerson() {
         Map<String, Integer> allPoints = new TreeMap<>();
         String result = "";
         double points = 0;
-        for(Map.Entry<String, ExamResult> entries: results.entrySet()){
-            if((entries.getValue().getTheory() / theoryMax) * 100>51 && (entries.getValue().getPractice() / practiceMax) * 100>51) {
+        for (Map.Entry<String, ExamResult> entries : results.entrySet()) {
+            if ((entries.getValue().getTheory() / theoryMax) * 100 > 51 && (entries.getValue().getPractice() / practiceMax) * 100 > 51) {
                 allPoints.put(entries.getKey(), (entries.getValue().getTheory() + entries.getValue().getPractice()));
             }
         }
-        for(Map.Entry<String, Integer> entries: allPoints.entrySet()){
-            if(entries.getValue() > points){
+        for (Map.Entry<String, Integer> entries : allPoints.entrySet()) {
+            if (entries.getValue() > points) {
                 points = entries.getValue();
             }
         }
-        for(Map.Entry<String,Integer> entries: allPoints.entrySet()){
-            if(entries.getValue() == points) {
-                result=entries.getKey();
+        for (Map.Entry<String, Integer> entries : allPoints.entrySet()) {
+            if (entries.getValue() == points) {
+                result = entries.getKey();
             }
         }
         return result;

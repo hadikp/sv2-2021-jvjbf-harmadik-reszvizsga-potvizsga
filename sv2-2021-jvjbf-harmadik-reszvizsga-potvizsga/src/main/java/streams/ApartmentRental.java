@@ -1,6 +1,7 @@
 package streams;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,13 +19,7 @@ public class ApartmentRental {
     }
 
     public List<Apartment> findApartmentByExtras(String... extra) {
-        List<Apartment> result = new ArrayList<>();
-        //return apartments.stream().filter(f -> f.getExtras().equals(Stream.of(extra))
-        /*for (String st: extra) {
-            Apartment apartment = apartments.stream().filter(f ->f.getExtras().equals(extra)).findFirst().orElse();
-            result.add(apartment);
-        }*/
-        return result;
+        return apartments.stream().filter(f -> f.getExtras().containsAll(Arrays.asList(extra))).toList();
     }
 
     public boolean isThereApartmentWithBathroomType(BathRoomType type) {
